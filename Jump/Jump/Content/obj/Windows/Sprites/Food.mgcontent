@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Development/Mono/Jump/Jump/Content/Sprites/Food.png</SourceFile>
-  <SourceTime>2018-08-10T15:36:38.9355124+01:00</SourceTime>
-  <DestFile>C:/Development/Mono/Jump/Jump/Content/bin/Windows/Sprites/Food.xnb</DestFile>
-  <DestTime>2018-08-10T15:37:22.9749159+01:00</DestTime>
+  <SourceFile>D:/UnityProjects/EAT-ME/Jump/Jump/Content/Sprites/Food.png</SourceFile>
+  <SourceTime>2018-08-10T19:28:31.1412049+01:00</SourceTime>
+  <DestFile>D:/UnityProjects/EAT-ME/Jump/Jump/Content/bin/Windows/Sprites/Food.xnb</DestFile>
+  <DestTime>2018-08-10T20:03:34.7187126+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

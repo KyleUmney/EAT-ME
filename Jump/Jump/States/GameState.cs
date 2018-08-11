@@ -14,8 +14,9 @@ namespace Jump.States
   {
     public List<Sprite> _sprites;
     public List<Sprite> _playerSprite;
-    public bool CanSpawn = false;
-    public float SpawnTimer = 300f;
+    public bool CanSpawn = true;
+    public float SpawnTimer = 50f;
+    public Texture2D Food;
     public Random rnd;
     public GameState(Game1 game, ContentManager content)
       : base(game, content)
@@ -24,9 +25,8 @@ namespace Jump.States
 
     public override void LoadContent()
     {
-      var foodTexture = _content.Load<Texture2D>("Sprites/Food");
+      Food = _content.Load<Texture2D>("Sprites/Food");
       var playerTexture = _content.Load<Texture2D>("Sprites/Player");
-      int t = 300;
       rnd = new Random();
 
       _sprites = new List<Sprite>();
@@ -40,61 +40,44 @@ namespace Jump.States
 
       });
 
-      _sprites.Add(new Cake(foodTexture)
+      _sprites.Add(new Cake(Food)
       {
         Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
       });
-      _sprites.Add(new Cake(foodTexture)
+      _sprites.Add(new Cake(Food)
       {
         Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
       });
-      _sprites.Add(new Cake(foodTexture)
+      _sprites.Add(new Cake(Food)
       {
         Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
       });
-
-      if (CanSpawn == true && SpawnTimer >= 300f)
-      {
-        for (int i = 0; i < t; i++)
-        {
-          _sprites.Add(new Cake(foodTexture)
-          {
-            Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-            Layer = 0.0f,
-            Sprites = _sprites,
-            IsRemoved = false,
-          });
-
-          CanSpawn = false;
-
-          if (CanSpawn == false)
-            break;
-        }
-        
-      }
-
-      for (int i = 0; i < 300f; i++)
-      {
-        if (CanSpawn == false && SpawnTimer != 300f)
-        {
-          SpawnTimer++;
-          if (SpawnTimer >= 300f)
-          {
-            CanSpawn = true;
-          }
-        }
-      }
-     
     }
+
+    private void Spawner(Texture2D foodTexture)
+    {
+
+      _sprites.Add(new Cake(foodTexture)
+      {
+        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
+        Layer = 0.0f,
+        Sprites = _sprites,
+        IsRemoved = false,
+      });
+
+      CanSpawn = false;
+
+    }
+
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
       spriteBatch.Begin(SpriteSortMode.FrontToBack);
@@ -133,25 +116,35 @@ namespace Jump.States
     public override void Update(GameTime gameTime)
     {
       foreach (var sprite in _sprites)
-      {
         sprite.Update(gameTime);
 
-      }
       foreach (var sprite in _playerSprite)
-      {
         sprite.Update(gameTime);
+
+
+      if (CanSpawn == true && SpawnTimer >= 50f)
+      {
+        Spawner(Food);
+        CanSpawn = false;
+        SpawnTimer = 0f;
       }
+      else if (CanSpawn == false && SpawnTimer != 50f)
+      {
+        SpawnTimer++;
+
+        if (SpawnTimer >= 50f)
+          CanSpawn = true;
+      }
+
 
       for (int i = 0; i < _sprites.Count; i++)
       {
-
         if (_playerSprite[0].Rectangle.Intersects(_sprites[i].Rectangle))
           _sprites.RemoveAt(i);
-
-        //if (_playerSprite[0].Position.X > _sprites[i].Position.X && _playerSprite[0].Position.X <= _sprites[i].Position.X + 10 &&
-        //  _playerSprite[0].Position.Y <= _sprites[i].Position.Y && _playerSprite[0].Position.Y > _sprites[i].Position.Y + 10)
-        //  _sprites.RemoveAt(i);
       }
+
+
+
     }
   }
 }
