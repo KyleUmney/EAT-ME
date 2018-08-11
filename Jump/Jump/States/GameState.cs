@@ -14,6 +14,8 @@ namespace Jump.States
   {
     public List<Sprite> _sprites;
     public List<Sprite> _playerSprite;
+    public SpriteFont font;
+    public int score = 0;
     public bool CanSpawn = true;
     public float SpawnTimer = 50f;
     public Texture2D Food;
@@ -27,6 +29,7 @@ namespace Jump.States
     {
       Food = _content.Load<Texture2D>("Sprites/Food");
       var playerTexture = _content.Load<Texture2D>("Sprites/Player");
+      font = _content.Load<SpriteFont>("Fonts/Default");
       rnd = new Random();
 
       _sprites = new List<Sprite>();
@@ -37,7 +40,6 @@ namespace Jump.States
         Colour = Color.Red,
         Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
         Layer = 0.0f,
-
       });
 
       _sprites.Add(new Cake(Food)
@@ -81,6 +83,8 @@ namespace Jump.States
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
       spriteBatch.Begin(SpriteSortMode.FrontToBack);
+
+      spriteBatch.DrawString(font, $"SCORE:{score}", new Vector2(Game1.screenWidth / 2, 20), Color.Black);
 
       foreach (var sprite in _sprites)
         sprite.Draw(gameTime, spriteBatch);
@@ -140,7 +144,11 @@ namespace Jump.States
       for (int i = 0; i < _sprites.Count; i++)
       {
         if (_playerSprite[0].Rectangle.Intersects(_sprites[i].Rectangle))
+        {
           _sprites.RemoveAt(i);
+          score++;
+        }
+
       }
 
 
