@@ -22,6 +22,8 @@ namespace Jump.Sprites
 
     public bool IsRemoved { get; set; }
 
+    public int Score { get; set; }
+
     public List<Sprite> Children { get; set; }
 
     public Sprite Parent;

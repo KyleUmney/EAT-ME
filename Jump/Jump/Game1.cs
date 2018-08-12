@@ -20,21 +20,6 @@ namespace Jump
     private State _currentState;
     private State _nextState;
 
-    //private float _rotation = 0f;
-    //public Vector2 Position = new Vector2(screenWidth / 2, screenHeight / 2);
-    //public Random rnd;
-    //private float _speed = 10f;
-    //public Texture2D _texture;
-    //public Texture2D _foodTexture;
-    //public Color Colour = Color.Pink;
-
-    //public Vector2 Origin
-    //{
-    //  get
-    //  {
-    //    return new Vector2(_texture.Width / 2, _texture.Height / 2);
-    //  }
-    //}
     public Game1()
     {
       graphics = new GraphicsDeviceManager(this);
@@ -69,10 +54,6 @@ namespace Jump
       _currentState = new GameState(this, Content);
       _currentState.LoadContent();
       _nextState = null;
-
-      // TODO: use this.Content to load your game content here
-      //_texture = Content.Load<Texture2D>("Sprites/Player");
-      //_foodTexture = Content.Load<Texture2D>("Sprites/Food");
     }
 
     /// <summary>
@@ -107,18 +88,6 @@ namespace Jump
     {
       _nextState = state;
     }
-    //protected void Spawn()
-    //{
-    //  Vector2[] _wayPoints = new Vector2[]
-    //  {
-    //    new Vector2(50,50),
-    //    new Vector2(100, 100),
-    //    new Vector2(150, 150),
-    //  };
-
-    // foreach (var point in _wayPoints)
-    //    spriteBatch.Draw(_foodTexture, _wayPoints[0], null, Colour, _rotation, Origin, 1f, SpriteEffects.None, 0.1f);
-    //}
 
     /// <summary>
     /// This is called when the game should draw itself.
@@ -127,8 +96,6 @@ namespace Jump
     protected override void Draw(GameTime gameTime)
     {
       GraphicsDevice.Clear(Color.CornflowerBlue);
-
-      // TODO: Add your drawing code here
 
       _currentState.Draw(gameTime, spriteBatch);
 

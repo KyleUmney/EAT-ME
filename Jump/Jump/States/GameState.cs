@@ -14,6 +14,7 @@ namespace Jump.States
   {
     public List<Sprite> _sprites;
     public List<Sprite> _playerSprite;
+    public List<Sprite> _enemySprite;
     public SpriteFont font;
     public int score = 0;
     public bool CanSpawn = true;
@@ -34,15 +35,15 @@ namespace Jump.States
       rnd = new Random();
 
       _sprites = new List<Sprite>();
-      _playerSprite = new List<Sprite>
+      _playerSprite = new List<Sprite>();
+      _enemySprite = new List<Sprite>();
+
+      _playerSprite.Add(new Player(playerTexture)
       {
-        new Player(playerTexture)
-        {
-          Colour = Color.Red,
-          Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
-          Layer = 0.0f,
-        }
-      };
+        Colour = Color.Red,
+        Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
+        Layer = 0.0f,
+      });
 
       _sprites.Add(new Cake(Food)
       {
@@ -50,6 +51,7 @@ namespace Jump.States
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
+        Score = 10,
       });
       _sprites.Add(new Cake(Food)
       {
@@ -57,6 +59,7 @@ namespace Jump.States
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
+        Score = 10,
       });
       _sprites.Add(new Cake(Food)
       {
@@ -64,9 +67,10 @@ namespace Jump.States
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
+        Score = 10,
       });
 
-      _playerSprite.Add(new TestEnemy(enemyTexture)
+      _enemySprite.Add(new TestEnemy(enemyTexture)
       {
         Colour = Color.Orange,
         Position = new Vector2(30, Game1.screenHeight / 2),
@@ -82,6 +86,7 @@ namespace Jump.States
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
+        Score = 10,
       });
 
       CanSpawn = false;
@@ -97,6 +102,9 @@ namespace Jump.States
         sprite.Draw(gameTime, spriteBatch);
 
       foreach (var sprite in _playerSprite)
+        sprite.Draw(gameTime, spriteBatch);
+
+      foreach (var sprite in _enemySprite)
         sprite.Draw(gameTime, spriteBatch);
 
       spriteBatch.End();
@@ -132,6 +140,8 @@ namespace Jump.States
       foreach (var sprite in _playerSprite)
         sprite.Update(gameTime);
 
+      foreach (var sprite in _enemySprite)
+        sprite.Update(gameTime);
 
       if (CanSpawn == true && SpawnTimer >= 50f)
       {
@@ -149,10 +159,13 @@ namespace Jump.States
 
       for (int i = 0; i < _sprites.Count; i++)
       {
+        if (_playerSprite[0].Rectangle.Intersects(_enemySprite[0].Rectangle))
+          score -= 10;
+
         if (_playerSprite[0].Rectangle.Intersects(_sprites[i].Rectangle))
         {
+          score += _sprites[i].Score;
           _sprites.RemoveAt(i);
-          score++;
         }
       }
     }
