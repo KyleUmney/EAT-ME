@@ -29,45 +29,53 @@ namespace Jump.States
     {
       Food = _content.Load<Texture2D>("Sprites/Food");
       var playerTexture = _content.Load<Texture2D>("Sprites/Player");
+      var enemyTexture = _content.Load<Texture2D>("Sprites/Enemy");
       font = _content.Load<SpriteFont>("Fonts/Default");
       rnd = new Random();
 
       _sprites = new List<Sprite>();
-      _playerSprite = new List<Sprite>();
+      _playerSprite = new List<Sprite>
+      {
+        new Player(playerTexture)
+        {
+          Colour = Color.Red,
+          Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
+          Layer = 0.0f,
+        }
+      };
 
-      _playerSprite.Add(new Player(playerTexture)
+      _sprites.Add(new Cake(Food)
       {
-        Colour = Color.Red,
-        Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
+        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
         Layer = 0.0f,
+        Sprites = _sprites,
+        IsRemoved = false,
+      });
+      _sprites.Add(new Cake(Food)
+      {
+        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
+        Layer = 0.0f,
+        Sprites = _sprites,
+        IsRemoved = false,
+      });
+      _sprites.Add(new Cake(Food)
+      {
+        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
+        Layer = 0.0f,
+        Sprites = _sprites,
+        IsRemoved = false,
       });
 
-      _sprites.Add(new Cake(Food)
+      _playerSprite.Add(new TestEnemy(enemyTexture)
       {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
+        Colour = Color.Orange,
+        Position = new Vector2(30, Game1.screenHeight / 2),
         Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-      });
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-      });
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
       });
     }
 
     private void Spawner(Texture2D foodTexture)
     {
-
       _sprites.Add(new Cake(foodTexture)
       {
         Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
@@ -77,7 +85,6 @@ namespace Jump.States
       });
 
       CanSpawn = false;
-
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -140,7 +147,6 @@ namespace Jump.States
           CanSpawn = true;
       }
 
-
       for (int i = 0; i < _sprites.Count; i++)
       {
         if (_playerSprite[0].Rectangle.Intersects(_sprites[i].Rectangle))
@@ -148,11 +154,7 @@ namespace Jump.States
           _sprites.RemoveAt(i);
           score++;
         }
-
       }
-
-
-
     }
   }
 }

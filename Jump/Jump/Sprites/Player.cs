@@ -35,13 +35,9 @@ namespace Jump.Sprites
       if (Keyboard.GetState().IsKeyDown(Keys.Left))
         Position.X += _rotation * Speed;
 
-
       Position = Vector2.Clamp(Position, new Vector2(0 + _texture.Width, 0 + _texture.Height), new Vector2(1280 - _texture.Width, 720 - _texture.Height));
-
-      
 
       base.Update(gameTime);
     }
-
   }
 }

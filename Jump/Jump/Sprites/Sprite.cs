@@ -27,6 +27,14 @@ namespace Jump.Sprites
     public Sprite Parent;
     public List<Sprite> Sprites { get; set; }
 
+    public Random rnd;
+
+    public List<Vector2> _wayPoints = new List<Vector2>
+    {
+      new Vector2(1250,Game1.screenHeight /2),
+      new Vector2(30,Game1.screenHeight /2),
+    };
+
     public Vector2 Origin
     {
       get

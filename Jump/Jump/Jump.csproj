@@ -48,6 +48,7 @@
     <Compile Include="Sprites\Cake.cs" />
     <Compile Include="Sprites\Player.cs" />
     <Compile Include="Sprites\Sprite.cs" />
+    <Compile Include="Sprites\TestEnemy.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\State.cs" />
   </ItemGroup>
