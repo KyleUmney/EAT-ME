@@ -20,6 +20,8 @@ namespace Jump.Sprites
 
     public float Speed { get; set; }
 
+    public float Scale { get; set; }
+
     public bool IsRemoved { get; set; }
 
     public int Score { get; set; }
@@ -51,7 +53,7 @@ namespace Jump.Sprites
     {
       get
       {
-        return new Rectangle((int)Position.X - (int)Origin.X, (int)Position.Y - (int)Origin.Y, _texture.Width, _texture.Height);
+        return new Rectangle((int)Position.X - (int)(Origin.X * Scale), (int)Position.Y - (int)(Origin.Y * Scale), (int)(_texture.Width * Scale), (int)(_texture.Height * Scale));
       }
     }
 
@@ -62,16 +64,28 @@ namespace Jump.Sprites
       Children = new List<Sprite>();
 
       Colour = Color.White;
+
+      Scale = 1f;
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-      spriteBatch.Draw(_texture, Position, null, Colour, _rotation, Origin, 1f, SpriteEffects.None, Layer);
+      spriteBatch.Draw(_texture, Position, null, Colour, _rotation, Origin, Scale, SpriteEffects.None, Layer);
     }
 
     public override void Update(GameTime gameTime)
     {
 
+    }
+
+    public virtual bool OnEnter(Sprite sprite)
+    {
+      return false;
+    }
+
+    public virtual bool OnExit(Sprite sprite)
+    {
+      return false;
     }
 
     public object Clone()

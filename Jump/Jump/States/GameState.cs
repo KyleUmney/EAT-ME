@@ -29,7 +29,7 @@ namespace Jump.States
     public override void LoadContent()
     {
       Food = _content.Load<Texture2D>("Sprites/Food");
-      var playerTexture = _content.Load<Texture2D>("Sprites/Player");
+      var playerTexutre = _content.Load<Texture2D>("Sprites/Player");
       var enemyTexture = _content.Load<Texture2D>("Sprites/Enemy");
       font = _content.Load<SpriteFont>("Fonts/Default");
       rnd = new Random();
@@ -38,7 +38,7 @@ namespace Jump.States
       _playerSprite = new List<Sprite>();
       _enemySprite = new List<Sprite>();
 
-      _playerSprite.Add(new Player(playerTexture)
+      _playerSprite.Add(new Player(playerTexutre)
       {
         Colour = Color.Red,
         Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
@@ -96,8 +96,6 @@ namespace Jump.States
     {
       spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
-      spriteBatch.DrawString(font, $"SCORE:{score}", new Vector2(Game1.screenWidth / 2, 20), Color.Black);
-
       foreach (var sprite in _sprites)
         sprite.Draw(gameTime, spriteBatch);
 
@@ -106,6 +104,12 @@ namespace Jump.States
 
       foreach (var sprite in _enemySprite)
         sprite.Draw(gameTime, spriteBatch);
+
+      spriteBatch.End();
+
+      spriteBatch.Begin(SpriteSortMode.FrontToBack);
+
+      spriteBatch.DrawString(font, $"SCORE:{score}", new Vector2(Game1.screenWidth / 2, 20), Color.Black);
 
       spriteBatch.End();
     }
@@ -157,15 +161,21 @@ namespace Jump.States
           CanSpawn = true;
       }
 
+      var hasExitedEnemy = _playerSprite[0].OnExit(_enemySprite[0]);
+
+      if (_playerSprite[0].OnEnter(_enemySprite[0]))
+      {
+        score -= 10;
+      }
+
       for (int i = 0; i < _sprites.Count; i++)
       {
-        if (_playerSprite[0].Rectangle.Intersects(_enemySprite[0].Rectangle))
-          score -= 10;
-
         if (_playerSprite[0].Rectangle.Intersects(_sprites[i].Rectangle))
         {
           score += _sprites[i].Score;
+          _playerSprite[0].Scale += 0.50f;
           _sprites.RemoveAt(i);
+          i--;
         }
       }
     }

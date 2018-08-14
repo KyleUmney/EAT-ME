@@ -39,5 +39,35 @@ namespace Jump.Sprites
 
       base.Update(gameTime);
     }
+
+    private List<Sprite> _enteredSprites = new List<Sprite>();
+
+    public override bool OnEnter(Sprite sprite)
+    {
+      if (_enteredSprites.Contains(sprite))
+        return false;
+
+      if (!this.Rectangle.Intersects(sprite.Rectangle))
+        return false;
+
+      _enteredSprites.Add(sprite);
+
+      if (sprite is TestEnemy)
+      {
+        Scale -= 0.50f;
+      }
+
+      return true;
+    }
+
+    public override bool OnExit(Sprite sprite)
+    {
+      if (this.Rectangle.Intersects(sprite.Rectangle))
+        return false;
+
+      _enteredSprites.Remove(sprite);
+
+      return true;
+    }
   }
 }
