@@ -25,6 +25,8 @@ namespace GUI.Views
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
       spriteBatch.DrawString(font, $"Health: {playerStats.Health}", Position, Colour);
+      spriteBatch.DrawString(font, $"Speed:  {playerStats.Speed}", Position + new Vector2(0, 20), Colour);
+      spriteBatch.DrawString(font, $"Defence:  {playerStats.Defence}", Position + new Vector2(0, 40), Colour);
     }
   }
 }

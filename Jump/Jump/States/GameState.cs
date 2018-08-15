@@ -17,7 +17,7 @@ namespace Jump.States
   {
     private ScoreView _scoreView;
     private StatsView _statsView;
-    private Stats _playerStats;
+    private Stats _stats;
     private Score _score;
     public List<Sprite> _sprites;
     public List<Sprite> _playerSprite;
@@ -48,6 +48,14 @@ namespace Jump.States
         Position = new Vector2(Game1.screenWidth / 2, 20),
       };
 
+      _stats = new Stats();
+
+      _statsView = new StatsView(_stats, font)
+      {
+        Colour = Color.Black,
+        Position = new Vector2(Game1.screenWidth - 100, 20),
+      };
+
       _upgradeManager = new UpgradesManager();
       _upgradeManager.LoadUpgrades();
 
@@ -63,33 +71,8 @@ namespace Jump.States
       _playerSprite.Add(new Player(playerTexutre)
       {
         Colour = Color.Red,
-        Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
+        Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight - 80),
         Layer = 0.0f,
-      });
-
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-        Score = 10,
-      });
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-        Score = 10,
-      });
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-        Score = 10,
       });
 
       _enemySprite.Add(new TestEnemy(enemyTexture)
