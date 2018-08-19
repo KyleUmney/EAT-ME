@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Backend.Models;
+using GUI.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,10 +9,16 @@ namespace GUI
   /// <summary>
   /// This is the main type for your game.
   /// </summary>
-  public class Game1 : Game
+  internal class Game1 : Game
   {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
+
+    public static int screenWidth = 1280;
+    public static int screenHeight = 720;
+
+    private State _currentState;
+    private State _nextState;
 
     public Game1()
     {
@@ -28,6 +36,10 @@ namespace GUI
     {
       // TODO: Add your initialization logic here
 
+      graphics.PreferredBackBufferWidth = screenWidth;
+      graphics.PreferredBackBufferHeight = screenHeight;
+      graphics.ApplyChanges();
+
       base.Initialize();
     }
 
@@ -38,9 +50,11 @@ namespace GUI
     protected override void LoadContent()
     {
       // Create a new SpriteBatch, which can be used to draw textures.
-      spriteBatch = new SpriteBatch(GraphicsDevice);
 
-      // TODO: use this.Content to load your game content here
+      spriteBatch = new SpriteBatch(GraphicsDevice);
+      _currentState = new GameState(this, Content);
+      _currentState.LoadContent();
+      _nextState = null;
     }
 
     /// <summary>
@@ -62,7 +76,14 @@ namespace GUI
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
         Exit();
 
-      // TODO: Add your update logic here
+      if (_nextState != null)
+      {
+        _currentState = _nextState;
+        _currentState.LoadContent();
+        _nextState = null;
+      }
+      _currentState.Update(gameTime);
+      _currentState.PostUpdate(gameTime);
 
       base.Update(gameTime);
     }
@@ -76,6 +97,7 @@ namespace GUI
       GraphicsDevice.Clear(Color.CornflowerBlue);
 
       // TODO: Add your drawing code here
+       _currentState.Draw(gameTime, spriteBatch);
 
       base.Draw(gameTime);
     }

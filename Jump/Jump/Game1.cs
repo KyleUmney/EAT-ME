@@ -1,4 +1,5 @@
-﻿using Jump.States;
+﻿using Backend.Models;
+using Jump.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;

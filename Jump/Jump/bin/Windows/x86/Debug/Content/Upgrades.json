@@ -1,0 +1,10 @@
+[
+  {
+    "Name": "Test",
+    "StatsModifier": {
+      "Health": 1,
+      "Speed": 1,
+      "Defence": 1
+    }
+  }
+]

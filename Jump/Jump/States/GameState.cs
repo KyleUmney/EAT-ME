@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Backend.Managers;
+using Backend.Models;
+using GUI.Views;
 using Jump.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -12,11 +15,16 @@ namespace Jump.States
 {
   class GameState : State
   {
+    private ScoreView _scoreView;
+    private StatsView _statsView;
+    private Stats _stats;
+    private Score _score;
     public List<Sprite> _sprites;
     public List<Sprite> _playerSprite;
     public List<Sprite> _enemySprite;
     public SpriteFont font;
-    public int score = 0;
+    private UpgradesManager _upgradeManager;
+
     public bool CanSpawn = true;
     public float SpawnTimer = 50f;
     public Texture2D Food;
@@ -32,6 +40,28 @@ namespace Jump.States
       var playerTexutre = _content.Load<Texture2D>("Sprites/Player");
       var enemyTexture = _content.Load<Texture2D>("Sprites/Enemy");
       font = _content.Load<SpriteFont>("Fonts/Default");
+      _score = new Score();
+
+      _scoreView = new ScoreView(_score, font)
+      {
+        Colour = Color.Black,
+        Position = new Vector2(Game1.screenWidth / 2, 20),
+      };
+
+      _stats = new Stats();
+
+      _statsView = new StatsView(_stats, font)
+      {
+        Colour = Color.Black,
+        Position = new Vector2(Game1.screenWidth - 100, 20),
+      };
+
+      _upgradeManager = new UpgradesManager();
+      _upgradeManager.LoadUpgrades();
+
+      foreach (var up in _upgradeManager.Upgrades)
+        Console.WriteLine(up.Name);
+
       rnd = new Random();
 
       _sprites = new List<Sprite>();
@@ -41,33 +71,8 @@ namespace Jump.States
       _playerSprite.Add(new Player(playerTexutre)
       {
         Colour = Color.Red,
-        Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight / 2),
+        Position = new Vector2(Game1.screenWidth / 2, Game1.screenHeight - 80),
         Layer = 0.0f,
-      });
-
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-        Score = 10,
-      });
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-        Score = 10,
-      });
-      _sprites.Add(new Cake(Food)
-      {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
-        Layer = 0.0f,
-        Sprites = _sprites,
-        IsRemoved = false,
-        Score = 10,
       });
 
       _enemySprite.Add(new TestEnemy(enemyTexture)
@@ -109,7 +114,10 @@ namespace Jump.States
 
       spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
-      spriteBatch.DrawString(font, $"SCORE:{score}", new Vector2(Game1.screenWidth / 2, 20), Color.Black);
+      //spriteBatch.DrawString(font, $"SCORE:{score}", new Vector2(Game1.screenWidth / 2, 20), Color.Black);
+      _scoreView.Draw(gameTime, spriteBatch);
+
+      _statsView.Draw(gameTime, spriteBatch);
 
       spriteBatch.End();
     }
@@ -165,14 +173,14 @@ namespace Jump.States
 
       if (_playerSprite[0].OnEnter(_enemySprite[0]))
       {
-        score -= 10;
+        _score.Value -= 10;
       }
 
       for (int i = 0; i < _sprites.Count; i++)
       {
         if (_playerSprite[0].Rectangle.Intersects(_sprites[i].Rectangle))
         {
-          score += _sprites[i].Score;
+          _score.Value += _sprites[i].Score;
           _playerSprite[0].Scale += 0.50f;
           _sprites.RemoveAt(i);
           i--;
