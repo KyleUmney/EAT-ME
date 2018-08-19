@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>D:/UnityProjects/EAT-ME/Jump/Jump/Content/Fonts/Default.spritefont</SourceFile>
-  <SourceTime>2017-03-01T15:05:30+00:00</SourceTime>
+  <SourceTime>2018-08-13T20:56:09.9474271+01:00</SourceTime>
   <DestFile>D:/UnityProjects/EAT-ME/Jump/Jump/Content/bin/Windows/Fonts/Default.xnb</DestFile>
-  <DestTime>2018-08-11T20:08:52.5715506+01:00</DestTime>
+  <DestTime>2018-08-14T18:01:56.4694914+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
