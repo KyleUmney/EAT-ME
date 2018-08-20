@@ -97,6 +97,23 @@ namespace Jump.States
       CanSpawn = false;
     }
 
+    private void SpawnerAndTimer()
+    {
+      if (CanSpawn == true && SpawnTimer >= 50f)
+      {
+        Spawner(Food);
+        CanSpawn = false;
+        SpawnTimer = 0f;
+      }
+      else if (CanSpawn == false && SpawnTimer != 50f)
+      {
+        SpawnTimer++;
+
+        if (SpawnTimer >= 50f)
+          CanSpawn = true;
+      }
+    }
+
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
       spriteBatch.Begin(SpriteSortMode.FrontToBack);
@@ -114,10 +131,11 @@ namespace Jump.States
 
       spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
-      //spriteBatch.DrawString(font, $"SCORE:{score}", new Vector2(Game1.screenWidth / 2, 20), Color.Black);
       _scoreView.Draw(gameTime, spriteBatch);
 
       _statsView.Draw(gameTime, spriteBatch);
+
+      //_window?.Draw(gameTime, spriteBatch);
 
       spriteBatch.End();
     }
@@ -146,6 +164,10 @@ namespace Jump.States
 
     public override void Update(GameTime gameTime)
     {
+      _stats.Health = 1;
+      _stats.Defence = 1;
+      _stats.Speed = 1;
+
       foreach (var sprite in _sprites)
         sprite.Update(gameTime);
 
@@ -155,19 +177,7 @@ namespace Jump.States
       foreach (var sprite in _enemySprite)
         sprite.Update(gameTime);
 
-      if (CanSpawn == true && SpawnTimer >= 50f)
-      {
-        Spawner(Food);
-        CanSpawn = false;
-        SpawnTimer = 0f;
-      }
-      else if (CanSpawn == false && SpawnTimer != 50f)
-      {
-        SpawnTimer++;
-
-        if (SpawnTimer >= 50f)
-          CanSpawn = true;
-      }
+      SpawnerAndTimer();
 
       var hasExitedEnemy = _playerSprite[0].OnExit(_enemySprite[0]);
 
@@ -181,7 +191,7 @@ namespace Jump.States
         if (_playerSprite[0].Rectangle.Intersects(_sprites[i].Rectangle))
         {
           _score.Value += _sprites[i].Score;
-          _playerSprite[0].Scale += 0.50f;
+          _playerSprite[0].Scale += 0.05f;
           _sprites.RemoveAt(i);
           i--;
         }
