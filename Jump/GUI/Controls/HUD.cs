@@ -41,7 +41,6 @@ namespace GUI.Controls
       _scoreView.Draw(gameTime, spriteBatch);
       _statsView.Draw(gameTime, spriteBatch);
       spriteBatch.End();
-
     }
   }
 }

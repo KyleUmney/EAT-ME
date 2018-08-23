@@ -114,3 +114,10 @@ C:\Users\Kyle\Documents\GitHub\EAT-ME\Jump\Jump\obj\x86\Debug\Jump.csproj.CoreCo
 C:\Users\Kyle\Documents\GitHub\EAT-ME\Jump\Jump\obj\x86\Debug\Jump.csproj.CopyComplete
 C:\Users\Kyle\Documents\GitHub\EAT-ME\Jump\Jump\obj\x86\Debug\Jump.exe
 C:\Users\Kyle\Documents\GitHub\EAT-ME\Jump\Jump\obj\x86\Debug\Jump.pdb
+D:\UnityProjects\EAT-ME\Jump\Jump\bin\Windows\x86\Debug\Content\Upgrades.json
+D:\UnityProjects\EAT-ME\Jump\Jump\bin\Windows\x86\Debug\Backend.dll
+D:\UnityProjects\EAT-ME\Jump\Jump\bin\Windows\x86\Debug\GUI.exe
+D:\UnityProjects\EAT-ME\Jump\Jump\bin\Windows\x86\Debug\Newtonsoft.Json.dll
+D:\UnityProjects\EAT-ME\Jump\Jump\bin\Windows\x86\Debug\Backend.pdb
+D:\UnityProjects\EAT-ME\Jump\Jump\bin\Windows\x86\Debug\GUI.pdb
+D:\UnityProjects\EAT-ME\Jump\Jump\bin\Windows\x86\Debug\Newtonsoft.Json.xml

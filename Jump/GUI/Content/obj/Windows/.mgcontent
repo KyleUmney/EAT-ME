@@ -4,6 +4,6 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Kyle/Documents/GitHub/EAT-ME/Jump/GUI/Content/Fonts/Default.spritefont</File>
+    <File>D:/UnityProjects/EAT-ME/Jump/GUI/Content/Fonts/Default.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

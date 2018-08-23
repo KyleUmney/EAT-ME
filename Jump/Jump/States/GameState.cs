@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Backend.Managers;
 using Backend.Models;
+using GUI.Controls;
 using GUI.Views;
 using Jump.Sprites;
 using Microsoft.Xna.Framework;
@@ -15,20 +16,22 @@ namespace Jump.States
 {
   class GameState : State
   {
-    private ScoreView _scoreView;
-    private StatsView _statsView;
     private Stats _stats;
     private Score _score;
+    private Random _rnd;
+    private HUD _hud;
+
     public List<Sprite> _sprites;
     public List<Sprite> _playerSprite;
     public List<Sprite> _enemySprite;
-    public SpriteFont font;
+
     private UpgradesManager _upgradeManager;
 
     public bool CanSpawn = true;
     public float SpawnTimer = 50f;
-    public Texture2D Food;
-    public Random rnd;
+
+    public Texture2D food;
+
     public GameState(Game1 game, ContentManager content)
       : base(game, content)
     {
@@ -36,37 +39,26 @@ namespace Jump.States
 
     public override void LoadContent()
     {
-      Food = _content.Load<Texture2D>("Sprites/Food");
+      food = _content.Load<Texture2D>("Sprites/Food");
+      
       var playerTexutre = _content.Load<Texture2D>("Sprites/Player");
       var enemyTexture = _content.Load<Texture2D>("Sprites/Enemy");
-      font = _content.Load<SpriteFont>("Fonts/Default");
+
       _score = new Score();
-
-      _scoreView = new ScoreView(_score, font)
-      {
-        Colour = Color.Black,
-        Position = new Vector2(Game1.screenWidth / 2, 20),
-      };
-
       _stats = new Stats();
+      _rnd = new Random();
 
-      _statsView = new StatsView(_stats, font)
-      {
-        Colour = Color.Black,
-        Position = new Vector2(Game1.screenWidth - 100, 20),
-      };
+      _sprites = new List<Sprite>();
+      _playerSprite = new List<Sprite>();
+      _enemySprite = new List<Sprite>();
+
+      _hud = new HUD(_content, _score, _stats);
 
       _upgradeManager = new UpgradesManager();
       _upgradeManager.LoadUpgrades();
 
       foreach (var up in _upgradeManager.Upgrades)
         Console.WriteLine(up.Name);
-
-      rnd = new Random();
-
-      _sprites = new List<Sprite>();
-      _playerSprite = new List<Sprite>();
-      _enemySprite = new List<Sprite>();
 
       _playerSprite.Add(new Player(playerTexutre)
       {
@@ -87,7 +79,7 @@ namespace Jump.States
     {
       _sprites.Add(new Cake(foodTexture)
       {
-        Position = new Vector2(rnd.Next(Game1.screenWidth), rnd.Next(Game1.screenHeight)),
+        Position = new Vector2(_rnd.Next(Game1.screenWidth), _rnd.Next(Game1.screenHeight)),
         Layer = 0.0f,
         Sprites = _sprites,
         IsRemoved = false,
@@ -101,7 +93,7 @@ namespace Jump.States
     {
       if (CanSpawn == true && SpawnTimer >= 50f)
       {
-        Spawner(Food);
+        Spawner(food);
         CanSpawn = false;
         SpawnTimer = 0f;
       }
@@ -131,13 +123,11 @@ namespace Jump.States
 
       spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
-      _scoreView.Draw(gameTime, spriteBatch);
-
-      _statsView.Draw(gameTime, spriteBatch);
-
       //_window?.Draw(gameTime, spriteBatch);
 
       spriteBatch.End();
+
+      _hud.Draw(gameTime, spriteBatch);
     }
 
     public override void PostUpdate(GameTime gameTime)

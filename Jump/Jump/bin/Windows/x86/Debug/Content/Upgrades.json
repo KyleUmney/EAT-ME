@@ -1,10 +1,20 @@
 [
   {
     "Name": "Test",
-    "StatsModifier": {
-      "Health": 1,
-      "Speed": 1,
-      "Defence": 1
-    }
+    "Health": 1,
+    "Speed": 1,
+    "Defence": 1
+  },
+  {
+    "Name": "Test2",
+    "Health": 2,
+    "Speed": 1,
+    "Defence": 1
+  },
+  {
+    "Name": "Test3",
+    "Health": 2,
+    "Speed": 1,
+    "Defence": 1
   }
 ]

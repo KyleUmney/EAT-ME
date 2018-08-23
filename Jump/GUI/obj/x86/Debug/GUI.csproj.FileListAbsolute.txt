@@ -23,3 +23,9 @@ D:\UnityProjects\EAT-ME\Jump\GUI\obj\x86\Debug\GUI.csproj.CoreCompileInputs.cach
 D:\UnityProjects\EAT-ME\Jump\GUI\obj\x86\Debug\GUI.csproj.CopyComplete
 D:\UnityProjects\EAT-ME\Jump\GUI\obj\x86\Debug\GUI.exe
 D:\UnityProjects\EAT-ME\Jump\GUI\obj\x86\Debug\GUI.pdb
+D:\UnityProjects\EAT-ME\Jump\GUI\bin\Windows\x86\Debug\Content\Upgrades.json
+D:\UnityProjects\EAT-ME\Jump\GUI\bin\Windows\x86\Debug\Content\Fonts\Default.xnb
+D:\UnityProjects\EAT-ME\Jump\GUI\bin\Windows\x86\Debug\Backend.dll
+D:\UnityProjects\EAT-ME\Jump\GUI\bin\Windows\x86\Debug\Newtonsoft.Json.dll
+D:\UnityProjects\EAT-ME\Jump\GUI\bin\Windows\x86\Debug\Backend.pdb
+D:\UnityProjects\EAT-ME\Jump\GUI\bin\Windows\x86\Debug\Newtonsoft.Json.xml
